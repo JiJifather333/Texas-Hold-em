@@ -194,14 +194,6 @@ def info(info):
     for item in dictionary.combination:
       print(dictionary.combination[item])
 
-def folds_or_no(item, Players_folds):
-  folds = 0
-  for i in range(len(Players_folds)):
-    if item == Players_folds[i]:
-      folds = 1
-      break
-  return folds
-
 def who_is_her(Players_seat, Players_folds):
   quan = len(Players_seat)
   for i in range(len(Players_seat)):
@@ -212,12 +204,14 @@ def who_is_her(Players_seat, Players_folds):
 
 def blinds(
   Players_seat, position, money, 
-  small_blind ,big_blind, bank,
+  small_blind ,big_blind,
   position_HU, 
   position_Full_Ring, 
   message, 
   USD
   ):
+  bank = 0
+  action_blinds = []
 # Простановка блайндов  
   for item in Players_seat:
     if ((position[item] == [dictionary.position_HU["BUTTON, SMALL BLIND"]]) 
@@ -236,11 +230,12 @@ def blinds(
       print(money, dictionary.message["BANK"], bank)
   return money, bank, action_blinds
 
-def cards_down(Players_seat):
+def cards_down(Players_seat, deck_haos, N):
 #Раздаем карты
   i = 0
+  cards = {}
   for item in Players_seat:
-    cards[item] = [deck_haos[i], deck_haos[i+n]]
+    cards[item] = [deck_haos[i], deck_haos[i+N]]
     i += 1
   print(cards)
   print(dictionary.message[" Игроки получили свои карты "])
@@ -254,54 +249,11 @@ def write_move():
   answer = int(function.parsing(answer))
   return answer
 
-def get_answer_check(big_blind, money, item):
-  print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
-  answer = -1
-  if not((answer == 0)
-    or ((answer >= big_blind) 
-    and (answer <= money[item]) 
-    and answer % big_blind == 0)):
-    while not((answer == 0) 
-      or ((answer >= big_blind) 
-      and (answer <= money[item])
-      and answer % big_blind == 0)):
-      print(
-        dictionary_of_personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
-        dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
-        position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
-        to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
-        USD["$"],dictionary.action["TO BET"]
-        )
-    answer = write_move()
-    return answer
-
-def get_answer_check(big_blind, money, item):
-  print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
-  answer = -1
-  if not((answer == 0)
-    or ((answer >= big_blind) 
-    and (answer <= money[item]) 
-    and answer % big_blind == 0)):
-    while not((answer == 0) 
-      or ((answer >= big_blind) 
-      and (answer <= money[item])
-      and answer % big_blind == 0)):
-      print(
-        dictionary_of_personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
-        dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
-        position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
-        to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
-        USD["$"],dictionary.action["TO BET"]
-        )
-    answer = write_move()
-  return answer
-
 def action_preflop(position, money, Players_seat):
 # Инициаиция игры!!!!!!!
-  bank = 0 # Переменная банк
+  bank = small_blind + big_blind # Переменная банк
   action_blinds = [["Blinds"]] # Истинный Список дейстий блайнды
   action_preflop = [["Preflop"]] # Список действий префлоп
-  Players_folds = []
   to_call = big_blind # Сумма, которую надо заколлировать игроку
   answer = big_blind # Ответ игрока
   k = -1 # количество кругов торговли
@@ -318,14 +270,32 @@ def action_preflop(position, money, Players_seat):
   while not(ishod == 1):
     k += 1
     for item in Players_seat:
-      fold = function.folds_or_no(item, Players_folds)
+      fold = folds_or_no(item, Player_folds)
       if fold == 0:
         to_call = last_raise - ( stack - money[item] )
         if to_call == 0:
           if position[item] == [dictionary.position_Full_Ring["BIG BLIND"]] and k == 0:
             pass
           else:
-            answer = get_answer_check(big_blind, money[item])
+            print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+            answer = -1
+            if not((answer == 0)
+              or ((answer >= big_blind) 
+              and (answer <= money[item]) 
+              and answer % big_blind == 0)):
+              while not((answer == 0) 
+                or ((answer >= big_blind) 
+                and (answer <= money[item])
+                and answer % big_blind == 0)):
+                print(
+                 dictionary_of_personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                 dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
+                 position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
+                 to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                 USD["$"],dictionary.action["TO BET"]
+                 )
+            print("ENTER YOUR ANSWER!!!!!!!!!!!!!!!")
+            answer = write_move()
             if answer == 0:
               action_preflop.append([item, position[item][0], dictionary.message["TO CHECK"]])
               print(action_preflop)
@@ -368,7 +338,24 @@ def action_preflop(position, money, Players_seat):
               or (position[item] == [dictionary.position_6_max["BUTTON"]]))):
               pass
             else:
-              answer = get_answer_bet(big_blind, money, item)
+              print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+              answer = -1
+              if not((answer == 0)
+                or ((answer >= big_blind) 
+                and (answer <= money[item]) 
+                and answer % big_blind == 0)):
+                while not((answer == 0) 
+                  or ((answer >= big_blind) 
+                  and (answer <= money[item])
+                  and answer % big_blind == 0)):
+                  print(
+                    dictionary.personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                    dictionary.message["YOUR NONEY"], money[item], dictionary.USD["$"], dictionary.message["YOUR POSITION"], 
+                    position[item][0], dictionary.message["YOUR CARDS"], dictionary.cards[item], item, dictionary.message["ENTER"], 
+                    to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                    USD["$"],dictionary.action["TO BET"]
+                    )
+              answer = write_move()
               if answer == 0:
                 action_preflop.append([item, position[item][0], dictionary.message["TO FOLD"]])
                 Players_folds.append(item)
@@ -413,17 +400,17 @@ def action_preflop(position, money, Players_seat):
                     dictionary.message["TO RAISE"], answer, dictionary.USD["$"]
                     )
                     last_raise = answer
-        if function.who_is_her(Players_seat, Players_folds) == 1: break
+        if who_is_her(Players_seat, Players_folds) == 1: break
         ishod = 1
         fold = 0
         item_copy = item
         for item in Players_seat:
-          fold = function.folds_or_no(item, Players_folds)
+          fold = folds_or_no(item, Players_folds)
           if fold == 0:
             if (stack - money[item]) > money_in_game:
               money_in_game = stack - money[item]
         for item in Players_seat:
-          fold = function.folds_or_no(item, Players_folds)
+          fold = folds_or_no(item, Players_folds)
           if fold == 0:
             if (stack - money[item]) == money_in_game:
               pass
@@ -436,18 +423,26 @@ def action_preflop(position, money, Players_seat):
         if k >= 1 and answer > big_blind:
           if (ishod == 1): break
       print(action_preflop)
-      return money, bank, action_preflop
+      return money, bank, action_preflop, Players_folds
 
-def flop_down(N):
+def flop_down(N, deck_haos):
   flop = []
   for i in range(3):
-     flop.append(function.deck_haos[2 * N + 1 + i])
+     flop.append(deck_haos[2 * N + 1 + i])
   print(dictionary.personal["DEALER"], "Flop", flop)
   return flop
 
-def money_flop():
+def folds_or_no(item, Player_folds):
+  folds = 0
+  for i in range(len(Player_folds)):
+    if item == Players_folds[i]:
+      folds = 1
+      break
+  return folds
+
+def money_flop(Players_seat):
   for item in Players_seat:
-    fold = function.folds_or_no(item, Players_folds)
+    fold = folds_or_no(item, Player_folds)
     if fold == 0:
       money_flop = money[item]
   return money_flop
@@ -473,7 +468,24 @@ def flop_round(Players_seat, Players_folds, money):
             if position[item] == [dictionary.position_Full_Ring["BUTTON"]] and k == 0:
               pass
             else:
-              answer = get_answer_check(big_blind, money[item])
+              print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+              answer = -1
+              if not((answer == 0)
+                or ((answer >= big_blind) 
+                and (answer <= money[item]) 
+                and answer % big_blind == 0)):
+                while not((answer == 0) 
+                  or ((answer >= big_blind) 
+                  and (answer <= money[item])
+                  and answer % big_blind == 0)):
+                  print(
+                    dictionary.personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                    dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
+                    position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
+                    to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                    USD["$"],dictionary.action["TO BET"]
+                    )
+              answer = write_move()
               if answer == 0:
                 action_flop.append([item, dictionary.message["TO CHECK"]])
                 print(action_flop)
@@ -526,11 +538,11 @@ def flop_round(Players_seat, Players_folds, money):
                     if money[item] == 0:
                       action_flop.append([item, position[item][0], dictionary.message["TO RAISE"], answer])
                       print(action_flop)
-                      print(dictionary_of_personal["DEALER"], item, dictionary.message["TO RAISE ALL IN"], answer, dictionary.USD["$"])
+                      print(dictionary.personal["DEALER"], item, dictionary.message["TO RAISE ALL IN"], answer, dictionary.USD["$"])
                     else:
                       action_flop.append([item, position[item][0], dictionary.message["TO RAISE"], answer])
                       print(action_flop)
-                      print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary.message["TO RAISE"], answer, dictionary.USD["$"])
+                      print(dictionary.personal["DEALER"], item, position[item][0], dictionary.message["TO RAISE"], answer, dictionary.USD["$"])
                     last_raise = answer
       ishod = 1
       fold = 0
@@ -555,7 +567,7 @@ def flop_round(Players_seat, Players_folds, money):
         if ishod == 1: break
 
       print(action_flop)
-  return bank, money, action_flop
+  return bank, money, action_flop, Players_folds
 
 def turn_round(Players_seat, Players_folds, money, N):
   print("***Dealing Turn***")
@@ -590,7 +602,24 @@ def turn_round(Players_seat, Players_folds, money, N):
             if position[item] == [dictionary.position_Full_Ring["BUTTON"]] and k == 0:
               pass
             else:
-              answer = get_answer_check()
+              print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+              answer = -1
+              if not((answer == 0)
+                or ((answer >= big_blind) 
+                and (answer <= money[item]) 
+                and answer % big_blind == 0)):
+                while not((answer == 0) 
+                  or ((answer >= big_blind) 
+                  and (answer <= money[item])
+                  and answer % big_blind == 0)):
+                  print(
+                    dictionary_of_personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                    dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
+                    position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
+                    to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                    USD["$"],dictionary.action["TO BET"]
+                    )
+              answer = write_move()
               if answer  == 0:
                 action_turn.append([item, dictionary.message["TO CHECK"]])
                 print(action_preflop)
@@ -621,7 +650,24 @@ def turn_round(Players_seat, Players_folds, money, N):
                   and (position[item] == [dictionary.position_Full_Ring["BUTTON"]])):
                   pass
                 else:
-                  answer = get_answer_bet()
+                  print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+                  answer = -1
+                  if not((answer == 0)
+                    or ((answer >= big_blind) 
+                    and (answer <= money[item]) 
+                    and answer % big_blind == 0)):
+                    while not((answer == 0) 
+                      or ((answer >= big_blind) 
+                      and (answer <= money[item])
+                      and answer % big_blind == 0)):
+                      print(
+                        dictionary.personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                        dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
+                        position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
+                        to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                        USD["$"],dictionary.action["TO BET"]
+                        )
+                  answer = write_move()
                   if answer  == 0:
                     action_turn.append([item, dictionary.message["TO FOLD"]])
                     Players_folds.append(item)
@@ -678,8 +724,8 @@ def turn_round(Players_seat, Players_folds, money, N):
 
 def river_round(Players_seat, Players_folds, money, N):
   print("***Dealing River***")
-  print(dictionary_of_message["POSITION"], position)
-  print(dictionary_of_personal["DEALER"], money, dictionary.message["BANK"], bank, dictionary.USD["$"])
+  print(dictionary.message["POSITION"], position)
+  print(dictionary.personal["DEALER"], money, dictionary.message["BANK"], bank, dictionary.USD["$"])
 
   river = function.deck_haos[2 * N + 7 + i]
   board.append(river)
@@ -711,7 +757,24 @@ def river_round(Players_seat, Players_folds, money, N):
             if position[item] == [dictionary.position_Full_Ring["BUTTON"]] and k == 0:
               pass
             else:
-              answer = get_answer_check()
+              print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+              answer = -1
+              if not((answer == 0)
+                or ((answer >= big_blind) 
+                and (answer <= money[item]) 
+                and answer % big_blind == 0)):
+                while not((answer == 0) 
+                  or ((answer >= big_blind) 
+                  and (answer <= money[item])
+                  and answer % big_blind == 0)):
+                  print(
+                    dictionary_of_personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                    dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
+                    position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
+                    to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                    USD["$"],dictionary.action["TO BET"]
+                    )
+              answer = write_move()
               if answer  == 0:
                 action_river.append([item, dictionary.message["TO CHECK"]])
                 print(action_preflop)
@@ -738,7 +801,24 @@ def river_round(Players_seat, Players_folds, money, N):
                 if (k == 0) and (position[item] == [dictionary.position_Full_Ring["BUTTON"]]):
                   pass
                 else:
-                  answer = get_answer_bet()
+                  print(dictionary.personal["DEALER"], dictionary.message["ACTION TO PLAYER"], item)
+                  answer = -1
+                  if not((answer == 0)
+                    or ((answer >= big_blind) 
+                    and (answer <= money[item]) 
+                    and answer % big_blind == 0)):
+                    while not((answer == 0) 
+                      or ((answer >= big_blind) 
+                      and (answer <= money[item])
+                      and answer % big_blind == 0)):
+                      print(
+                        dictionary.personal["DEALER"], dictionary.message["BANK"], bank, dictionary.USD["$"], 
+                        dictionary.message["YOUR NONEY"], money[item], USD["$"], dictionary.message["YOUR POSITION"], 
+                        position[item][0], dictionary.message["YOUR CARDS"], cards[item], item, dictionary.message["ENTER"], 
+                        to_call, dictionary.USD["$"], dictionary.action["TO CHECK"], dictionary.action["MIN"], big_blind, 
+                        USD["$"],dictionary.action["TO BET"]
+                        )
+                  answer = write_move()
                   if answer  == 0:
                     action_river.append([item, dictionary.message["TO FOLD"]])
                     Players_folds.append(item)
@@ -789,7 +869,7 @@ def river_round(Players_seat, Players_folds, money, N):
         if ishod == 1 and position[item] == [dictionary.position_6_max["BUTTON"]]: break
       if k >= 2:
          if ishod == 1: break
-  return bank, money, Players_seat
+  return bank, money, Players_seat, Players_folds
 
 def show_down(Players_seat, Players_folds):
   if who_is_her(Players_seat, Players_folds) > 1:
@@ -804,20 +884,4 @@ def show_down(Players_seat, Players_folds):
 #  print(dictionary.message["POSITION"], position)
 #  print(dictionary.personal["DEALER"], money, dictionary.message["BANK"], bank, dictionary.USD["$"])
  
-def winner(who_is_her(), folds_or_no(), Players_seat, Players_folds, item, Players_folds:
-  if not(who_is_her(Players_seat, Players_folds) > 1):
-    for item in Players_seat:
-      fold = folds_or_no(item, Players_folds)
-      if fold == 0:
-        winner = item
-        print("Winner - ",item, "Bank - ", bank)
 
-# Обнуление
-      game += 1
-      Players_seat = Players[0:] + Players[:0]
-      position = detected_position(Players_seat)
-      for item in Players_seat:
-        money[item] = stack
-# Сброс   
-
-    status = input()
