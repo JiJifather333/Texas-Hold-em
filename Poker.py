@@ -372,14 +372,14 @@ while not(status == dictionary_of_status["Stop!"]):
             pass
           else:
             print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-            print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0],   dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"],to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], last_raise * 2, USD["$"], dictionary_of_action["TO RAISE"])
+            print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0],   dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"],to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], last_raise + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
             answer = input()
             info(answer)
             answer = parsing(answer)
             answer = int(answer)
             if not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
               while not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
-                print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0,dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], last_raise * 2, USD["$"], dictionary_of_action["TO RAISE"])
+                print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0,dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], last_raise + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
                 answer = input()
                 info(answer)
                 answer = parsing(answer)
@@ -518,14 +518,14 @@ while not(status == dictionary_of_status["Stop!"]):
               pass
             else:
               print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO RAISE"])
+              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_bling, USD["$"], dictionary_of_action["TO RAISE"])
               answer = input()
               info(answer)
               answer = parsing(answer)
               answer = int(answer)
               if not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
                 while not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, dictionary_of_message["YOUR NONEY"], money[item], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call * 2, dictionary_of_action["TO RAISE"])
+                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, dictionary_of_message["YOUR NONEY"], money[item], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_bling, dictionary_of_action["TO RAISE"])
                   answer = input()
                   info(answer)
                   answer = parsing(answer)
@@ -657,14 +657,14 @@ while not(status == dictionary_of_status["Stop!"]):
               pass
             else:
               print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO RAISE"])
+              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_bling, USD["$"], dictionary_of_action["TO RAISE"])
               answer = input()
               info(answer)
               answer = parsing(answer)
               answer = int(answer)
               if not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
                 while not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO RAISE"])
+                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_bling, USD["$"], dictionary_of_action["TO RAISE"])
                   answer = input()
                   info(answer)
                   answer = parsing(answer)
@@ -793,14 +793,14 @@ while not(status == dictionary_of_status["Stop!"]):
               pass
             else:
               print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO RAISE"])
+              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
               answer = input()
               info(answer)
               answer = parsing(answer)
               answer = int(answer)
               if not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
                 while not((answer == 0) or (answer == to_call) or ((answer >= to_call * 2) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO RAISE"])
+                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
                   answer = input()
                   info(answer)
                   answer = parsing(answer)
