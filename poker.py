@@ -416,7 +416,7 @@ while not(status == dictionary_of_status["Stop!"]):
                       if i[0] == item and i[2] == "Raises":
                         last_raise_item_preflop = i[3]
                   money[item] = money[item] - answer + last_raise_item_preflop
-                  bank = bank + answer
+                bank = bank + answer
                 if money[item] == 0:
                   action_preflop.append([item, position[item][0], dictionary_of_message["TO RAISE"], answer])
                   print(action_preflop)
