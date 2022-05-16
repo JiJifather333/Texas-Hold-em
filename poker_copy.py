@@ -106,7 +106,7 @@ def get_date_time():
 #Время
 
 # Welcome
-def welcome(personal["NAME VLADELEC GAME"], Welcome["MESSAGE ONE"],Welcome["MESSAGE TWO"]):
+def welcome(personal, Welcome):
   print(personal["NAME VLADELEC GAME"], Welcome["MESSAGE ONE"])
   print(Welcome["MESSAGE TWO"])
 # Welcome
@@ -126,7 +126,7 @@ def append_players(Welcome):
 
 
 # Игроки сели, их имена лежат в Players
-def message_four(Welcome["MESSAGE FOUR"]):
+def message_four(Welcome):
   print(Welcome["MESSAGE FOUR"])
 
 # Определяем баттон
@@ -166,7 +166,7 @@ def who_button(deck, power_cards, Players):
         button = item
 # Нужно, что проверить, что высшая карта одна, иначе раздать еще раз
     for item in cards_value:
-      if cards_value[item] = high_value_cards:
+      if cards_value[item] == high_value_cards:
         k += 1
     j = 0
     for item in Players:
@@ -222,26 +222,17 @@ print(dictionary_of_message["POSITION"], position)
 # Баттон определен. Места игроков за столом в Players_seat
 
 # Закуп игроков
-
-print(Welcome["MESSAGE FIVE"])
+def message_five(Welcome):
+  print(Welcome["MESSAGE FIVE"])
 
 # Создаем словарь денег
-money = {}
-for item in Players_seat:
-  money[item] = stack
-print(dictionary_of_message["MONEY"], money)
-# Создали. Количесто денег каждого игрока лежит в money
-
-print(dictionary_of_message["ALL END BYIN"])
-
-# Создаем словарь profit
-profit = {}
-for item in Players_seat:
-  profit[item] = 0
-print(dictionary_of_message["PROFIT"], profit)
-# Создали. profit каждого игрока лежит в profit
-
-# Все закупились
+def money(Players_seat, stack, message):
+  money = {}
+  for item in Players_seat:
+    money[item] = stack
+  print(message["MONEY"], money)
+  print(message["ALL END BYIN"])
+  return money
 
 # Начало игры
 
