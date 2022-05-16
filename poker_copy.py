@@ -234,46 +234,46 @@ def money(Players_seat, stack, message):
   print(message["ALL END BYIN"])
   return money
 
-# Начало игры
+# Начало игры ####################################################??????????????????
+#Очень неопределенное место. Когда игра должна страртовать? Будет
+#много игр, и параллелльно. Надо их нумеровать. Будет несколько процессов.
+def start_game(status_go, Welcome):
+  status = status_go["Go!"]
+  print(Welcome["MESSAGE SIX"])
+  print(Welcome["MESSAGE SEVEN"])
+  number_game = 1
+  return status, game
+###################################################################
 
-status = dictionary_of_status["Go!"]
+#Далее пойдет сама функция game!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#def game(status_go, personal, number_game, Players_seat, n, message, position, position_HU,
+#position_6_max, position_Full_Ring, USD, stack, big_blind, small_blind)
 
-# Приветствие
-print(Welcome["MESSAGE SIX"])
-# Поприветствовали!
+while not(status == status_go["Stop!"]):
 
-# Дисклеймер
-print(Welcome["MESSAGE SEVEN"])
-# Дисклеймер
-game = 1
-while not(status == dictionary_of_status["Stop!"]):
-  print(dictionary_of_personal["DEALER"], "Game №", game)
+  print(personal["DEALER"], "Game №", number_game)
+
+  def cards_down_night(Players_seat, n):
 # start and shaffling deck
-  deck = start_deck()
-  deck_haos = haos(deck)
-# Перемешали
+    deck = start_deck()
+    deck_haos = haos(deck)
+    cards = {}
+    for item in Players_seat:
+      i = 0
+      cards[item] = [deck_haos[i], deck_haos[i + n]]
+      i += 1
+    print(message[" Игроки получили свои карты "])
+    print("Никому не показывайте ваши карты, даже если человек представляется сотрудником Вашего Банка!")
+    return cards
 
-# Раздача карт
-
-# Создаем пустой словарь
-  cards = {}
-# Создали
-
-#Раздаем карты
-  for item in Players_seat:
-    cards[item] = [deck_haos[i], deck_haos[i+n]]
-    i += 1
-  print(cards)
-  print(dictionary_of_message[" Игроки получили свои карты "])
-  print(" Никому не показывайте свои карты, даже если человек представляется сотрудником Вашего Банка!")
-# Карты ассоциированные с игроками лежат в cards
-
+  cards = cards_down_night(Players_seat,n)
+  
 # Карты розданы. 
 
   bank = 0 # Переменная банк
-  action_blinds = [["Blinds"]] # Истинный Список дейстий блайнды
+  action_blinds = [["Blinds"]] # Список дейстий блайнды
   action_preflop = [["Preflop"]] # Список действий префлоп
-  Players_folds = []
+  Players_folds = [] # Список сфолдивших игроков
   to_call = big_blind # Сумма, которую надо заколлировать игроку
   answer = big_blind # Ответ игрока
   k = -1 # количество кругов торговли
@@ -287,25 +287,25 @@ while not(status == dictionary_of_status["Stop!"]):
 
 # Простановка блайндов  
   for item in Players_seat:
-    if (position[item] == [dictionary_of_position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [dictionary_of_position_Full_Ring["SMALL BLIND"]]):
+    if (position[item] == [position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [position_Full_Ring["SMALL BLIND"]]):
       money[item] = money[item] - small_blind
       bank = bank + small_blind
-      action_blinds.append([item, position[item][0], dictionary_of_message["BET SMALL BLINDS"], small_blind])
+      action_blinds.append([item, position[item][0], message["BET SMALL BLINDS"], small_blind])
       print(action_blinds)
-      print(dictionary_of_personal["DEALER"], item, dictionary_of_message["BET SMALL BLINDS"], small_blind, USD["$"])
-    if position[item] == [dictionary_of_position_Full_Ring["BIG BLIND"]]:
+      print(personal["DEALER"], item, message["BET SMALL BLINDS"], small_blind, USD["$"])
+    if position[item] == [position_Full_Ring["BIG BLIND"]]:
       money[item] = money[item] - big_blind
       bank = bank + big_blind
-      action_blinds.append([item, position[item][0], dictionary_of_message["BET BIG BLINDS"], big_blind])
+      action_blinds.append([item, position[item][0], message["BET BIG BLINDS"], big_blind])
       print(action_blinds)
-      print(dictionary_of_personal["DEALER"], item, dictionary_of_message["BET BIG BLINDS"], big_blind, USD["$"])
-      print(money, dictionary_of_message["BANK"], bank)
+      print(personal["DEALER"], item, message["BET BIG BLINDS"], big_blind, USD["$"])
+      print(money, message["BANK"], bank)
 
 # Ход игры
   
   print(action_blinds)
   print("***Dealing Preflop***")
-  print(dictionary_of_message["POSITION"], position)
+  print(message["POSITION"], position)
 
   while not(ishod == 1):
     k += 1
