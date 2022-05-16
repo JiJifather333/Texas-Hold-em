@@ -321,6 +321,36 @@ while not(status == status_go["Stop!"]):
           answer = int(parsing(answer))
     return answer
 
+  def analis_answer_after_check(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise):
+    if answer  == 0:
+      action_preflop.append([item, position[item][0], message["TO CHECK"]])
+      print(action_preflop)
+      print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
+    else:
+      if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 1:
+        money[item] = money[item] - answer + big_blind
+      if (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1:
+        money[item] = money[item] - answer + small_blind
+      if not((position[item] == [position_Full_Ring["BIG BLIND"]] or position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1):
+        for i in action_preflop:
+          if i == ["Preflop"]:
+            pass
+          else:
+            if i[0] == item and i[2] == "Raises":
+              last_raise_item_preflop = i[3]
+        money[item] = money[item] - answer + last_raise_item_preflop
+      bank = bank + answer
+      if money[item] == 0:
+        action_preflop.append([item, position[item][0], message["TO BET"], answer])
+        print(action_preflop)
+        print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
+      else:
+        action_preflop.append([item, position[item][0], message["TO BET"], answer])
+        print(action_preflop)
+        print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
+      last_raise = answer
+    return action_preflop, money, bank, last_raise_item_preflop, last_raise
+
   while not(ishod == 1):
     k += 1
     for item in Players_seat:
@@ -333,39 +363,12 @@ while not(status == status_go["Stop!"]):
           else:
             if i[0] == item and i[2] == "Raises":
               last_raise_item_preflop = i[3]
-        if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
+        if to_call == 0 and not(k > 1 and last_raise == last_raise_item_preflop): # and last raise or or ??????????????????????????
           if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 0:
             pass
           if not(position[item] == [position_Full_Ring["BIG BLIND"]] and k == 0):
             answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
-            if answer  == 0:
-              action_preflop.append([item, position[item][0], dictionary_of_message["TO CHECK"]])
-              print(action_preflop)
-              print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO CHECK"])
-            else:
-              if position[item] == [dictionary_of_position_Full_Ring["BIG BLIND"]] and k == 1:
-                money[item] = money[item] - answer + big_blind
-              if (position[item] == [dictionary_of_position_Full_Ring["SMALL BLIND"]] or position[item] == [dictionary_of_position_HU["BUTTON, SMALL BLIND"]]) and k == 1:
-                money[item] = money[item] - answer + small_blind
-              if not((position[item] == [dictionary_of_position_Full_Ring["BIG BLIND"]] or position[item] == [dictionary_of_position_Full_Ring["SMALL BLIND"]] or position[item] == [dictionary_of_position_HU["BUTTON, SMALL BLIND"]]) and k == 1):
-                for i in action_preflop:
-                    if i == ["Preflop"]:
-                      pass
-                    else:
-                      if i[0] == item and i[2] == "Raises":
-                        last_raise_item_preflop = i[3]
-                money[item] = money[item] - answer + last_raise_item_preflop
-              bank = bank + answer
-              print(bank, "FEWFWEFWEFEFEWFEWFWEF")
-              if money[item] == 0:
-                action_preflop.append([item, position[item][0], dictionary_of_message["TO BET"], answer])
-                print(action_preflop)
-                print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO BET ALL IN"], answer, USD["$"])
-              else:
-                action_preflop.append([item, position[item][0], dictionary_of_message["TO BET"], answer])
-                print(action_preflop)
-                print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO BET"], answer, USD["$"])
-              last_raise = answer
+            action_preflop, money, bank, last_raise_item_preflop, last_raise = analis_answer_after_check(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise)
         else:
           if (k == 0) and ((position[item] == [dictionary_of_position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [dictionary_of_position_6_max["SMALL BLIND"]]) or (position[item] == [dictionary_of_position_6_max["BUTTON"]])):
             pass
