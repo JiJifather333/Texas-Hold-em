@@ -441,10 +441,66 @@ while not(status == status_go["Stop!"]):
   print(action_preflop)
 # Блайнды проставлены
   print("***Dealing Flop***")
-  print(dictionary_of_message["POSITION"], position)
-  print(dictionary_of_personal["DEALER"], money, dictionary_of_message["BANK"], bank, USD["$"])
+  print(message["POSITION"], position)
+  print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
 
+  def analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise):
+    if answer == 0:
+      action_flop.append([item, message["TO CHECK"]])
+      print(action_flop)
+      print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
+    else:
+      for i in action_flop:
+        if i == ["Flop"]:
+          pass
+        else:
+          if i[0] == item and i[2] == "Raises":
+            last_raise_item_flop = i[3]
+      money[item] = money[item] - answer + last_raise_item_flop
+      bank = bank + answer
+      if money[item] == 0:
+        action_flop.append([item, message["TO BET"], answer])
+        print(action_flop)
+        print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
+      else:
+        action_flop.append([item, message["TO BET"], answer])
+        print(action_flop)
+        print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
+      last_raise = answer
+    return action_flop, last_raise_item_flop, money, bank, last_raise
 
+  def analis_answer_after_call_raise_flop(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
+    if answer  == 0:
+      action_flop.append([item, message["TO FOLD"]])
+      Players_folds.append(item)
+      print(action_flop)
+      print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
+    else:
+      if answer == to_call:
+        money[item] = money[item] - to_call
+        bank = bank + to_call
+        action_flop.append([item, message["TO CALL"], to_call])
+        print(action_flop)
+        print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+      else:
+        for i in action_flop:
+          if i == ["Flop"]:
+            pass
+          else:
+            if i[0] == item and i[2] == "Raises":
+              last_raise_item_flop = i[3]
+        money[item] = money[item] - answer + last_raise_item_flop
+        bank = bank + answer
+        if money[item] == 0:
+          action_flop.append([item, position[item][0], message["TO RAISE"], answer])
+          print(action_flop)
+          print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
+        else:
+          action_flop.append([item, position[item][0], message["TO RAISE"], answer])
+          print(action_flop)
+          print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+        last_raise = answer
+      return action_flop, Players_folds, money, bank, last_raise_item_flop, last_raise
 
   flop = []
   for i in range(3):
@@ -474,7 +530,7 @@ while not(status == status_go["Stop!"]):
         if fold == 0:
           to_call = last_raise - ( money_flop - money[item] )
           for i in action_preflop:
-            if i == ["Preflop"]:
+            if i == ["Flop"]:
               pass
             else:
               if i[0] == item and i[2] == "Raises":
@@ -484,65 +540,13 @@ while not(status == status_go["Stop!"]):
               pass
             else:
               answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
-
-              if answer == 0:
-                action_flop.append([item, dictionary_of_message["TO CHECK"]])
-                print(action_flop)
-                print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO CHECK"])
-              else:
-                for i in action_flop:
-                  if i == ["Flop"]:
-                    pass
-                  else:
-                    if i[0] == item and i[2] == "Raises":
-                      last_raise_item_flop = i[3]
-                money[item] = money[item] - answer + last_raise_item_flop
-                bank = bank + answer
-                if money[item] == 0:
-                  action_flop.append([item, dictionary_of_message["TO BET"], answer])
-                  print(action_flop)
-                  print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO BET ALL IN"], answer, USD["$"])
-                else:
-                  action_flop.append([item, dictionary_of_message["TO BET"], answer])
-                  print(action_flop)
-                  print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO BET"], answer, USD["$"])
-                last_raise = answer
+              action_flop, last_raise_item_flop, money, bank, last_raise = analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise)
           else:
             if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
               pass
             else:
-              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
-              
-              if answer  == 0:
-                action_flop.append([item, dictionary_of_message["TO FOLD"]])
-                Players_folds.append(item)
-                print(action_flop)
-                print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO FOLD"])
-              else:
-                if answer == to_call:
-                  money[item] = money[item] - to_call
-                  bank = bank + to_call
-                  action_flop.append([item, dictionary_of_message["TO CALL"], to_call])
-                  print(action_flop)
-                  print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO CALL"], to_call, USD["$"])
-                else:
-                  for i in action_flop:
-                    if i == ["Flop"]:
-                      pass
-                    else:
-                      if i[0] == item and i[2] == "Raises":
-                        last_raise_item_flop = i[3]
-                  money[item] = money[item] - answer + last_raise_item_flop
-                  bank = bank + answer
-                  if money[item] == 0:
-                    action_flop.append([item, position[item][0], dictionary_of_message["TO RAISE"], answer])
-                    print(action_flop)
-                    print(dictionary_of_personal["DEALER"], item, dictionary_of_message["TO RAISE ALL IN"], answer, USD["$"])
-                  else:
-                    action_flop.append([item, position[item][0], dictionary_of_message["TO RAISE"], answer])
-                    print(action_flop)
-                    print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO RAISE"], answer, USD["$"])
-                  last_raise = answer
+              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)             
+              action_flop, Players_folds, money, bank, last_raise_item_flop, last_raise = analis_answer_after_call_raise_flop(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
         if who_is_her(Players_seat, Players_folds) == 1: break
         ishod = 1
         for item in Players_seat:
@@ -743,7 +747,7 @@ while not(status == status_go["Stop!"]):
               pass
             else:
               answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
-              
+
               if answer  == 0:
                 action_river.append([item, dictionary_of_message["TO FOLD"]])
                 Players_folds.append(item)
