@@ -317,7 +317,7 @@ while not(status == status_go["Stop!"]):
           answer = int(parsing(answer))
     return answer
 
-  def analis_answer_after_check_bet(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise):
+  def analis_answer_after_check_bet_preflop(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise):
     if answer  == 0:
       action_preflop.append([item, position[item][0], message["TO CHECK"]])
       print(action_preflop)
@@ -361,7 +361,7 @@ while not(status == status_go["Stop!"]):
         answer = int(parsing(answer))
     return answer
 
-  def analis_answer_call_raise(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise):
+  def analis_answer_after_call_raise_preflop(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise):
     if answer == 0:
       action_preflop.append([item, position[item][0], message["TO FOLD"]])
       Players_folds.append(item)
@@ -402,6 +402,7 @@ while not(status == status_go["Stop!"]):
   while not(ishod == 1):
     k += 1
     for item in Players_seat:
+      if len(Players_folds) == len(Players_seat) - 1: break
       fold = folds_or_no(item, Players_folds)
       if fold == 0:
         to_call = last_raise - ( stack - money[item] )
@@ -421,11 +422,9 @@ while not(status == status_go["Stop!"]):
             pass
           else:
             answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
-            action_preflop, Players_folds, money, last_raise_item_preflop, bank, last_raise = analis_answer_call_raise(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise)
+            action_preflop, Players_folds, money, last_raise_item_preflop, bank, last_raise = analis_answer_after_call_raise_preflop(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise)
       if who_is_her(Players_seat, Players_folds) == 1: break
       ishod = 1
-      fold = 0
-      item_copy = item
       for item in Players_seat:
         fold = folds_or_no(item, Players_folds)
         if fold == 0:
@@ -438,23 +437,19 @@ while not(status == status_go["Stop!"]):
             pass
           else:
             ishod += 1
-      item = item_copy
-      if k == 1 and last_raise == big_blind:
-        if (ishod == 1):
-          if position[item] == [dictionary_of_position_6_max["BIG BLIND"]]: break
-      if k >= 1 and answer > big_blind:
-        if (ishod == 1): break
-      
+   ############################################################################## дальше флоп   
   print(action_preflop)
 # Блайнды проставлены
   print("***Dealing Flop***")
   print(dictionary_of_message["POSITION"], position)
   print(dictionary_of_personal["DEALER"], money, dictionary_of_message["BANK"], bank, USD["$"])
 
+
+
   flop = []
   for i in range(3):
     flop.append(deck_haos[2 * n + 1 + i])
-  print(dictionary_of_personal["DEALER"], "Flop", flop)
+  print(personal["DEALER"], "Flop", flop)
   board = flop
   
   for item in Players_seat:
@@ -474,6 +469,7 @@ while not(status == status_go["Stop!"]):
     while not(ishod == 1 and k >= 1):
       k += 1
       for item in Players_seat:
+        if len(Players_folds) == len(Players_seat) - 1: break
         fold = folds_or_no(item, Players_folds)
         if fold == 0:
           to_call = last_raise - ( money_flop - money[item] )
@@ -487,19 +483,8 @@ while not(status == status_go["Stop!"]):
             if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
               pass
             else:
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], to_call, USD["$"], dictionary_of_action["TO CHECK"], dictionary_of_action["MIN"], big_blind, USD["$"], dictionary_of_action["TO BET"])
-              answer = input()
-              info(answer)
-              answer = parsing(answer)
-              answer = int(answer)
-              if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], to_call, USD["$"], dictionary_of_action["TO CHECK"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO BET"])
-                  answer = input()
-                  info(answer)
-                  answer = parsing(answer)
-                  answer = int(answer)
+              answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
+
               if answer == 0:
                 action_flop.append([item, dictionary_of_message["TO CHECK"]])
                 print(action_flop)
@@ -526,19 +511,8 @@ while not(status == status_go["Stop!"]):
             if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
               pass
             else:
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
-              answer = input()
-              info(answer)
-              answer = parsing(answer)
-              answer = int(answer)
-              if not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                while not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, dictionary_of_message["YOUR NONEY"], money[item], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_bling, dictionary_of_action["TO RAISE"])
-                  answer = input()
-                  info(answer)
-                  answer = parsing(answer)
-                  answer = int(answer)
+              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
+              
               if answer  == 0:
                 action_flop.append([item, dictionary_of_message["TO FOLD"]])
                 Players_folds.append(item)
@@ -569,9 +543,8 @@ while not(status == status_go["Stop!"]):
                     print(action_flop)
                     print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO RAISE"], answer, USD["$"])
                   last_raise = answer
+        if who_is_her(Players_seat, Players_folds) == 1: break
         ishod = 1
-        fold = 0
-        item_copy = item
         for item in Players_seat:
           fold = folds_or_no(item, Players_folds)
           if fold == 0:
@@ -584,12 +557,6 @@ while not(status == status_go["Stop!"]):
               pass
             else:
               ishod += 1
-        item = item_copy
-        if k == 1:
-          if ishod == 1 and position[item] == [dictionary_of_position_6_max["BUTTON"]]: 
-            break
-        if k >= 2:
-          if ishod == 1: break
 
 
   print(action_flop)
@@ -618,6 +585,7 @@ while not(status == status_go["Stop!"]):
     while not(ishod == 1 and k >= 1):
       k += 1
       for item in Players_seat:
+        if len(Players_folds) == len(Players_seat) - 1: break
         fold = folds_or_no(item, Players_folds)
         if fold == 0:
           to_call = last_raise - ( money_turn - money[item] )
@@ -631,19 +599,8 @@ while not(status == status_go["Stop!"]):
             if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
               pass
             else:
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], to_call, USD["$"], dictionary_of_action["TO CHECK"], dictionary_of_action["MIN"], big_blind, USD["$"], dictionary_of_action["TO BET"])
-              answer = input()
-              info(answer)
-              answer = parsing(answer)
-              answer = int(answer)
-              if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, dictionary_of_message["YOUR NONEY"], money[item], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], to_call, dictionary_of_action["TO CHECK"], dictionary_of_action["MIN"], to_call * 2, dictionary_of_action["TO BET"])
-                  answer = input()
-                  info(answer)
-                  answer = parsing(answer)
-                  answer = int(answer)
+              answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
+
               if answer  == 0:
                 action_turn.append([item, dictionary_of_message["TO CHECK"]])
                 print(action_preflop)
@@ -671,19 +628,7 @@ while not(status == status_go["Stop!"]):
             if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
               pass
             else:
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
-              answer = input()
-              info(answer)
-              answer = parsing(answer)
-              answer = int(answer)
-              if not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                while not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_bling) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_bling, USD["$"], dictionary_of_action["TO RAISE"])
-                  answer = input()
-                  info(answer)
-                  answer = parsing(answer)
-                  answer = int(answer)
+              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
               if answer  == 0:
                 action_turn.append([item, dictionary_of_message["TO FOLD"]])
                 Players_folds.append(item)
@@ -713,9 +658,8 @@ while not(status == status_go["Stop!"]):
                     print(action_turn)
                     print(dictionary_of_personal["DEALER"], item, position[item][0], dictionary_of_message["TO RAISE"], answer, USD["$"])
                   last_raise = answer
+        if who_is_her(Players_seat, Players_folds) == 1: break
         ishod = 1
-        fold = 0
-        item_copy = item
         for item in Players_seat:
           fold = folds_or_no(item, Players_folds)
           if fold == 0:
@@ -728,11 +672,6 @@ while not(status == status_go["Stop!"]):
               pass
             else:
               ishod += 1
-        item = item_copy
-        if k == 1:
-          if ishod == 1 and position[item] == [dictionary_of_position_6_max["BUTTON"]]: break
-        if k >= 2:
-          if ishod == 1: break
 
   print(action_turn)
   print("***Dealing River***")
@@ -761,6 +700,7 @@ while not(status == status_go["Stop!"]):
     while not(ishod == 1 and k >= 1):
       k += 1
       for item in Players_seat:
+        if len(Players_folds) == len(Players_seat) - 1: break
         fold = folds_or_no(item, Players_folds)
         if fold == 0:
           to_call = last_raise - ( money_river - money[item] )
@@ -774,19 +714,8 @@ while not(status == status_go["Stop!"]):
             if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
               pass
             else:
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0],dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], to_call, USD["$"], dictionary_of_action["TO CHECK"], dictionary_of_action["MIN"], big_blind, USD["$"], dictionary_of_action["TO BET"])
-              answer = input()
-              info(answer)
-              answer = parsing(answer)
-              answer = int(answer)
-              if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], to_call, USD["$"], dictionary_of_action["TO CHECK"], dictionary_of_action["MIN"], to_call * 2, USD["$"], dictionary_of_action["TO BET"])
-                  answer = input()
-                  info(answer)
-                  answer = parsing(answer)
-                  answer = int(answer)
+              answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
+
               if answer  == 0:
                 action_river.append([item, dictionary_of_message["TO CHECK"]])
                 print(action_preflop)
@@ -813,19 +742,8 @@ while not(status == status_go["Stop!"]):
             if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
               pass
             else:
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["ACTION TO PLAYER"], item)
-              print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
-              answer = input()
-              info(answer)
-              answer = parsing(answer)
-              answer = int(answer)
-              if not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-                while not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_bling) and (answer <= money[item])and answer % big_blind == 0)):
-                  print(dictionary_of_personal["DEALER"], dictionary_of_message["BANK"], bank, USD["$"], dictionary_of_message["YOUR NONEY"], money[item], USD["$"], dictionary_of_message["YOUR POSITION"], position[item][0], dictionary_of_message["YOUR CARDS"], cards[item], item, dictionary_of_message["ENTER"], 0, dictionary_of_action["TO FOLD"], to_call, USD["$"], dictionary_of_action["TO CALL"], dictionary_of_action["MIN"], to_call + big_blind, USD["$"], dictionary_of_action["TO RAISE"])
-                  answer = input()
-                  info(answer)
-                  answer = parsing(answer)
-                  answer = int(answer)
+              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
+              
               if answer  == 0:
                 action_river.append([item, dictionary_of_message["TO FOLD"]])
                 Players_folds.append(item)
@@ -856,9 +774,8 @@ while not(status == status_go["Stop!"]):
                     print(action_river)
                     print(dictionary_of_personal["DEALER"], item, dictionary_of_message["TO RAISE"], answer, USD["$"])
                   last_raise = answer
+          if who_is_her(Players_seat, Players_folds) == 1: break
           ishod = 1
-          fold = 0
-          item_copy = item
           for item in Players_seat:
             fold = folds_or_no(item, Players_folds)
             if fold == 0:
@@ -871,11 +788,6 @@ while not(status == status_go["Stop!"]):
                 pass
               else:
                 ishod += 1
-          item = item_copy
-          if k == 1:
-            if ishod == 1 and position[item] == [dictionary_of_position_6_max["BUTTON"]]: break
-          if k >= 2:
-            if ishod == 1: break
   
   if who_is_her(Players_seat, Players_folds) > 1:
     print("***Show Down***")
