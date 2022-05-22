@@ -9,6 +9,10 @@ games.welcome()
 
 n, Players = games.append_players(Welcome)
 
+deck = games.start_deck()
+
+Players_seat = games.who_button(deck, power_cards, Players)
+
 games.message_four(Welcome)
 
 games.message_five(Welcome)
