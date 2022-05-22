@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 import random
 
-def decalrate_important_variables():
+def declare_important_variables():
 # Декларируются важные переменные для игры
   stack = 100000 # Закуп игроков. Используется в словаре money
   small_blind = stack // 200 # малый блайнд
@@ -100,9 +100,9 @@ def haos(deck):
 
 # Время
 def get_date_time():
-  data = datetime.fromtimestamp(time.time().strftime("%d.%m.%Y %H:%M:%S"))
-  print(data)
-  return data
+  date = datetime.fromtimestamp(time.time().strftime("%d.%m.%Y %H:%M:%S"))
+  print(date)
+  return date
 #Время
 
 # Welcome
