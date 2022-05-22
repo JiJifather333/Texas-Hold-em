@@ -92,7 +92,7 @@ def haos(deck):
     s2 = deck_haos[k:l]
     s3 = deck_haos[l:]
     deck_haos = s2 + s1 + s3
-  print(dictionary_of_message["STATUS DECK TWO"])
+  print(message["STATUS DECK TWO"])
   return deck_haos
 # Колода перемешана
 
@@ -109,7 +109,7 @@ def append_players(Welcome):
   print(Welcome["MESSAGE THREE"])
   Players = []
   n = 0
-  while not(n >= 2 and n <= 0):
+  while not(n >= 2 and n <= 9):
     print("Введите количество игроков. От 2 до 9")
     n = int(parsing(input()))
   print("Введите имена игроков")

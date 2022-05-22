@@ -3,7 +3,7 @@ from games import combination, nohand_combination, position_HU, action, personal
 
 stack, small_blind, big_blind, raik = games.declare_important_variables()
 
-games.welcome()
+games.welcome(personal, Welcome)
 
 n, Players = games.append_players(Welcome)
 
