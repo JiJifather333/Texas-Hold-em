@@ -155,7 +155,7 @@ def who_button(deck, power_cards, Players):
       else:
         cards_value[item] = int(cards[item][0][0])
     for item in cards_value:
-      if cards_value[item] > hihg_value_cards:
+      if cards_value[item] > high_value_cards:
         high_value_cards = cards_value[item]
         button = item
 # Нужно, что проверить, что высшая карта одна, иначе раздать еще раз
