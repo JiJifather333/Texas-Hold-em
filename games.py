@@ -236,7 +236,7 @@ def start_game(status_go, Welcome):
 ###################################################################
 
 #Далее пойдет сама функция game!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def game(status, status_go, personal, number_game, Players_seat, n, message, position, position_HU, position_6_max, position_Full_Ring, USD, stack, big_blind, small_blind):
+def game(status, status_go, personal, number_game, Players_seat, n, message, position, position_HU, position_6_max, position_Full_Ring, USD, stack, big_blind, small_blind, money):
 
   while not(status == status_go["Stop!"]):
 
