@@ -98,13 +98,6 @@ def haos(deck):
 
 # Пристегните ремни, игра началась!!!
 
-# Время
-def get_date_time():
-  date = datetime.fromtimestamp(time.time().strftime("%d.%m.%Y %H:%M:%S"))
-  print(date)
-  return date
-#Время
-
 # Welcome
 def welcome(personal, Welcome):
   print(personal["NAME VLADELEC GAME"], Welcome["MESSAGE ONE"])

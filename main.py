@@ -3,8 +3,6 @@ from games import combination, nohand_combination, position_HU, action, personal
 
 stack, small_blind, big_blind, raik = games.declare_important_variables()
 
-date = games.get_date_time()
-
 games.welcome()
 
 n, Players = games.append_players(Welcome)
