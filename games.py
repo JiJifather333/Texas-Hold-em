@@ -528,7 +528,7 @@ def game(status, status_go, personal, number_game, Players_seat, n, message, pos
               else:
                 if i[0] == item and i[2] == "Raises":
                   last_raise_item_preflop = i[3]
-            if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
+            if to_call == 0 and not(k > 1 and last_raise == last_raise_item_preflop):
               if position[item] == [Full_Ring["BUTTON"]] and k == 0:
                 pass
               else:
