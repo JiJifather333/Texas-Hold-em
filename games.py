@@ -253,9 +253,9 @@ def game(status, status_go, personal, number_game, Players_seat, n, message, pos
         i += 1
       print(message[" Игроки получили свои карты "])
       print("Никому не показывайте ваши карты, даже если человек представляется сотрудником Вашего Банка!")
-      return cards
+      return cards, deck_haos
 
-    cards = cards_down_night(Players_seat,n)
+    cards, deck_haos = cards_down_night(Players_seat,n)
   
 # Карты розданы. 
 
