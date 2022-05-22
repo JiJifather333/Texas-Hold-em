@@ -308,12 +308,12 @@ def game(status_go, personal, number_game, Players_seat, n, message, position, p
       info(answer)
       answer = parsing(answer)
       answer = int(answer)
-        if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item]) and answer % big_blind == 0)):
-          while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-            print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], to_call, USD["$"], action["TO CHECK"], action["MIN"], big_blind, USD["$"], action["TO BET"])
-            answer = input()
-            info(answer)
-            answer = int(parsing(answer))
+      if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item]) and answer % big_blind == 0)):
+        while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
+          print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], to_call, USD["$"], action["TO CHECK"], action["MIN"], big_blind, USD["$"], action["TO BET"])
+          answer = input()
+          info(answer)
+          answer = int(parsing(answer))
       return answer
 
     def analis_answer_after_check_bet_preflop(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise):
