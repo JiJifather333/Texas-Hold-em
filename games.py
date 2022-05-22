@@ -80,7 +80,7 @@ def parsing(answer):
 
 # Перемешиваем колоду
 def haos(deck):
-  print(dictionary_of_message["STATUS DECK ONE"])
+  print(message["STATUS DECK ONE"])
   s1 = []
   s2 = []
   s3 = []
