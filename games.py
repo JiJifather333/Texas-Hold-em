@@ -824,7 +824,7 @@ def game(status_go, personal, number_game, Players_seat, n, message, position, p
           winner = item
       print("Winner - ",item, "Bank - ", bank)
 # Обнуление
-    game += 1
+    number_game += 1
     Players_seat = Players[0:] + Players[:0]
     position = detected_position(Players_seat)
     for item in Players_seat:
