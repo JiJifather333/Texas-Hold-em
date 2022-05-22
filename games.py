@@ -37,7 +37,7 @@ position_6_max = {"EARLY POSITION":"EP","MIDDLE POSITION":"MP","CATT OFF":"CO","
 
 Welcome = {"MESSAGE ONE": " Добро пожаловать в самое прекрасное казино на свете CherCasino! CherCasino - деньги в корзину. Try your luck!", "MESSAGE TWO":"Стоп слово - Stop! Да да, не удивляйтесь", "MESSAGE THREE": " ++++ Игроки садятся за стол ++++", "MESSAGE FOUR":" ++++ Игроки сели за стол ++++", "MESSAGE FIVE":" by-in 100.000 $", "MESSAGE SIX":" Пристегните ремни, игра началась!!!", "MESSAGE SEVEN":" Если вы или ваши близкие страдают от игровой зависимости мы бы порекомендовали вам выйти из за стола. Но теперь каждый из вас покинет стол только если он пустой или мертвый. Удачи!"}
 
-status = {"Go!": "Go!","Stop!":"Stop!"}
+status_go = {"Go!": "Go!","Stop!":"Stop!"}
 
 USD = {"$":"$"}
 position_Full_Ring = {"UNDER THE GUN 1":"UTG 1", "UNDER THE GUN 2":"UTG 2", "UNDER THE GUN 3":"UTG 3", "MIDDLE POSITION 1":"MP 1", "MIDDLE POSITION 2":"MP 2", "CATT OFF":"CO", "BUTTON":"BTN","SMALL BLIND":"SB","BIG BLIND":"BB"}
