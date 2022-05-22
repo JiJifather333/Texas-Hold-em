@@ -238,7 +238,7 @@ def start_game(status_go, Welcome):
   print(Welcome["MESSAGE SIX"])
   print(Welcome["MESSAGE SEVEN"])
   number_game = 1
-  return status, game
+  return status, number_game
 ###################################################################
 
 #Далее пойдет сама функция game!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
