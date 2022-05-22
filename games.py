@@ -529,13 +529,13 @@ def game(status, status_go, personal, number_game, Players_seat, n, message, pos
                 if i[0] == item and i[2] == "Raises":
                   last_raise_item_preflop = i[3]
             if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
-              if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
+              if position[item] == [Full_Ring["BUTTON"]] and k == 0:
                 pass
               else:
                 answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
                 action_flop, last_raise_item_flop, money, bank, last_raise = analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise)
             else:
-              if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
+              if (k == 0) and (position[item] == [Full_Ring["BUTTON"]]):
                 pass
               else:
                 answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)             
