@@ -11,6 +11,8 @@ deck = games.start_deck()
 
 Players_seat = games.who_button(deck, power_cards, Players)
 
+position = games.detected_position(Players_seat)
+
 games.message_four(Welcome)
 
 games.message_five(Welcome)
