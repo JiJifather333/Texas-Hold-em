@@ -7,6 +7,16 @@ date = games.get_date_time()
 
 games.welcome()
 
-games.games()
+n, Players = games.append_players(Welcome)
+
+games.message_four(Welcome)
+
+games.message_five(Welcome)
+
+money = games.money(Players_seat, stack, message)
+
+status, game = games.start_game(status_go, Welcome)
+
+games.game(status_go, personal, number_game, Players_seat, n, message, position, position_HU, position_6_max, position_Full_Ring, USD, stack, big_blind, small_blind
 
 
