@@ -242,144 +242,91 @@ def start_game(status_go, Welcome):
 ###################################################################
 
 #Далее пойдет сама функция game!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#def game(status_go, personal, number_game, Players_seat, n, message, position, position_HU,
-#position_6_max, position_Full_Ring, USD, stack, big_blind, small_blind)
+def game(status_go, personal, number_game, Players_seat, n, message, position, position_HU, position_6_max, position_Full_Ring, USD, stack, big_blind, small_blind)
 
-while not(status == status_go["Stop!"]):
+  while not(status == status_go["Stop!"]):
 
-  print(personal["DEALER"], "Game №", number_game)
+    print(personal["DEALER"], "Game №", number_game)
 
-  def cards_down_night(Players_seat, n):
+    def cards_down_night(Players_seat, n):
 # start and shaffling deck
-    deck = start_deck()
-    deck_haos = haos(deck)
-    cards = {}
-    for item in Players_seat:
-      i = 0
-      cards[item] = [deck_haos[i], deck_haos[i + n]]
-      i += 1
-    print(message[" Игроки получили свои карты "])
-    print("Никому не показывайте ваши карты, даже если человек представляется сотрудником Вашего Банка!")
-    return cards
+      deck = start_deck()
+      deck_haos = haos(deck)
+      cards = {}
+      for item in Players_seat:
+        i = 0
+        cards[item] = [deck_haos[i], deck_haos[i + n]]
+        i += 1
+      print(message[" Игроки получили свои карты "])
+      print("Никому не показывайте ваши карты, даже если человек представляется сотрудником Вашего Банка!")
+      return cards
 
-  cards = cards_down_night(Players_seat,n)
+    cards = cards_down_night(Players_seat,n)
   
 # Карты розданы. 
 
-  bank = 0 # Переменная банк
-  action_blinds = [["Blinds"]] # Список дейстий блайнды
-  action_preflop = [["Preflop"]] # Список действий префлоп
-  Players_folds = [] # Список сфолдивших игроков
-  to_call = big_blind # Сумма, которую надо заколлировать игроку
-  answer = big_blind # Ответ игрока
-  k = -1 # количество кругов торговли
-  ishod = 0
-  summ = 0
-  money_in_game = 0
-  last_raise = big_blind
-  last_raise_item_preflop = 0
+    bank = 0 # Переменная банк
+    action_blinds = [["Blinds"]] # Список дейстий блайнды
+    action_preflop = [["Preflop"]] # Список действий префлоп
+    Players_folds = [] # Список сфолдивших игроков
+    to_call = big_blind # Сумма, которую надо заколлировать игроку
+    answer = big_blind # Ответ игрока
+    k = -1 # количество кругов торговли
+    ishod = 0
+    summ = 0
+    money_in_game = 0
+    last_raise = big_blind
+    last_raise_item_preflop = 0
   
-  print("***Dealing Blinds***")
+    print("***Dealing Blinds***")
 
 # Простановка блайндов  
-  for item in Players_seat:
-    if (position[item] == [position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [position_Full_Ring["SMALL BLIND"]]):
-      money[item] = money[item] - small_blind
-      bank = bank + small_blind
-      action_blinds.append([item, position[item][0], message["BET SMALL BLINDS"], small_blind])
-      print(action_blinds)
-      print(personal["DEALER"], item, message["BET SMALL BLINDS"], small_blind, USD["$"])
-    if position[item] == [position_Full_Ring["BIG BLIND"]]:
-      money[item] = money[item] - big_blind
-      bank = bank + big_blind
-      action_blinds.append([item, position[item][0], message["BET BIG BLINDS"], big_blind])
-      print(action_blinds)
-      print(personal["DEALER"], item, message["BET BIG BLINDS"], big_blind, USD["$"])
-      print(money, message["BANK"], bank)
+    for item in Players_seat:
+      if (position[item] == [position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [position_Full_Ring["SMALL BLIND"]]):
+        money[item] = money[item] - small_blind
+        bank = bank + small_blind
+        action_blinds.append([item, position[item][0], message["BET SMALL BLINDS"], small_blind])
+        print(action_blinds)
+        print(personal["DEALER"], item, message["BET SMALL BLINDS"], small_blind, USD["$"])
+      if position[item] == [position_Full_Ring["BIG BLIND"]]:
+        money[item] = money[item] - big_blind
+        bank = bank + big_blind
+        action_blinds.append([item, position[item][0], message["BET BIG BLINDS"], big_blind])
+        print(action_blinds)
+        print(personal["DEALER"], item, message["BET BIG BLINDS"], big_blind, USD["$"])
+        print(money, message["BANK"], bank)
 
 # Ход игры
   
-  print(action_blinds)
-  print("***Dealing Preflop***")
-  print(message["POSITION"], position)
+    print(action_blinds)
+    print("***Dealing Preflop***")
+    print(message["POSITION"], position)
 ####################################################################################################Delete
-  def get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind):
-    print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], to_call, USD["$"], action["TO CHECK"], action["MIN"], big_blind, USD["$"], action["TO BET"])
-    answer = input()
-    info(answer)
-    answer = parsing(answer)
-    answer = int(answer)
-      if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item]) and answer % big_blind == 0)):
-        while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-          print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], to_call, USD["$"], action["TO CHECK"], action["MIN"], big_blind, USD["$"], action["TO BET"])
-          answer = input()
-          info(answer)
-          answer = int(parsing(answer))
-    return answer
+    def get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind):
+      print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], to_call, USD["$"], action["TO CHECK"], action["MIN"], big_blind, USD["$"], action["TO BET"])
+      answer = input()
+      info(answer)
+      answer = parsing(answer)
+      answer = int(answer)
+        if not((answer == 0) or ((answer >= big_blind) and (answer <= money[item]) and answer % big_blind == 0)):
+          while not((answer == 0) or ((answer >= big_blind) and (answer <= money[item])and answer % big_blind == 0)):
+            print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], to_call, USD["$"], action["TO CHECK"], action["MIN"], big_blind, USD["$"], action["TO BET"])
+            answer = input()
+            info(answer)
+            answer = int(parsing(answer))
+      return answer
 
-  def analis_answer_after_check_bet_preflop(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise):
-    if answer  == 0:
-      action_preflop.append([item, position[item][0], message["TO CHECK"]])
-      print(action_preflop)
-      print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
-    else:
-      if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 1:
-        money[item] = money[item] - answer + big_blind
-      if (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1:
-        money[item] = money[item] - answer + small_blind
-      if not((position[item] == [position_Full_Ring["BIG BLIND"]] or position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1):
-        for i in action_preflop:
-          if i == ["Preflop"]:
-            pass
-          else:
-            if i[0] == item and i[2] == "Raises":
-              last_raise_item_preflop = i[3]
-        money[item] = money[item] - answer + last_raise_item_preflop
-      bank = bank + answer
-      if money[item] == 0:
-        action_preflop.append([item, position[item][0], message["TO BET"], answer])
+    def analis_answer_after_check_bet_preflop(answer, action_preflop, item, position, message, personal, position_Full_Ring, k, money, big_blind, position_HU, last_raise_item_preflop, bank, last_raise):
+      if answer  == 0:
+        action_preflop.append([item, position[item][0], message["TO CHECK"]])
         print(action_preflop)
-        print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
+        print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
       else:
-        action_preflop.append([item, position[item][0], message["TO BET"], answer])
-        print(action_preflop)
-        print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
-      last_raise = answer
-    return action_preflop, money, bank, last_raise_item_preflop, last_raise
-######################################################################################################Delete
-  def get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer):
-    print(personal["DEALER"], message["ACTION TO PLAYER"], item)
-    print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], 0, action["TO FOLD"], to_call, USD["$"], action["TO CALL"], action["MIN"], last_raise + big_blind, USD["$"], action["TO RAISE"])
-    answer = input()
-    info(answer)
-    answer = int(parsing(answer))
-    if not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-      while not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
-        print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], 0, action["TO FOLD"], to_call, USD["$"], action["TO CALL"], action["MIN"], last_raise + big_blind, USD["$"], action["TO RAISE"])
-        answer = input()
-        info(answer)
-        answer = int(parsing(answer))
-    return answer
-
-  def analis_answer_after_call_raise_preflop(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise):
-    if answer == 0:
-      action_preflop.append([item, position[item][0], message["TO FOLD"]])
-      Players_folds.append(item)
-      print(action_preflop)
-      print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
-    else:
-      if answer == to_call:
-        money[item] = money[item] - to_call
-        bank = bank + to_call
-        action_preflop.append([item, position[item][0], message["TO CALL"], to_call])
-        print(action_preflop)
-        print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
-      else:
-        if (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1:
-          money[item] = money[item] - answer + small_blind
         if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 1:
           money[item] = money[item] - answer + big_blind
-        if not(k == 1 and (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_Full_Ring["BIG BLIND"]] or (position[item] == [position_HU["BUTTON, SMALL BLIND"]]))):
+        if (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1:
+          money[item] = money[item] - answer + small_blind
+        if not((position[item] == [position_Full_Ring["BIG BLIND"]] or position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1):
           for i in action_preflop:
             if i == ["Preflop"]:
               pass
@@ -389,99 +336,118 @@ while not(status == status_go["Stop!"]):
           money[item] = money[item] - answer + last_raise_item_preflop
         bank = bank + answer
         if money[item] == 0:
-          action_preflop.append([item, position[item][0], message["TO RAISE"], answer])
+          action_preflop.append([item, position[item][0], message["TO BET"], answer])
           print(action_preflop)
-          print(personal["DEALER"], item, position[item][0], message["TO RAISE ALL IN"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
         else:
-          action_preflop.append([item, position[item][0], message["TO RAISE"], answer])
+          action_preflop.append([item, position[item][0], message["TO BET"], answer])
           print(action_preflop)
-          print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
         last_raise = answer
-    return action_preflop, Players_folds, money, last_raise_item_preflop, bank, last_raise
-##############################################################################################
-  while not(ishod == 1):
-    k += 1
-    for item in Players_seat:
-      if len(Players_folds) == len(Players_seat) - 1: break
-      fold = folds_or_no(item, Players_folds)
-      if fold == 0:
-        to_call = last_raise - ( stack - money[item] )
-        for i in action_preflop:
-          if i == ["Preflop"]:
-            pass
-          else:
-            if i[0] == item and i[2] == "Raises":
-              last_raise_item_preflop = i[3]
-        if to_call == 0 and not(k > 1 and last_raise == last_raise_item_preflop):
-          if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 0:
-            pass
-        else:
-          if (k == 0) and ((position[item] == [position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [position_6_max["SMALL BLIND"]]) or (position[item] == [position_6_max["BUTTON"]])):
-            pass
-          if last_raise = last_raise_item_preflop:
-            pass
-          else:
-            answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
-            action_preflop, Players_folds, money, last_raise_item_preflop, bank, last_raise = analis_answer_after_call_raise_preflop(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise)
-      if who_is_her(Players_seat, Players_folds) == 1: break
-      ishod = 1
-      for item in Players_seat:
-        fold = folds_or_no(item, Players_folds)
-        if fold == 0:
-          if (stack - money[item]) > money_in_game:
-            money_in_game = stack - money[item]
-      for item in Players_seat:
-        fold = folds_or_no(item, Players_folds)
-        if fold == 0:
-          if (stack - money[item]) == money_in_game:
-            pass
-          else:
-            ishod += 1
-   ############################################################################## дальше флоп   
-  print(action_preflop)
-# Блайнды проставлены
-  print("***Dealing Flop***")
-  print(message["POSITION"], position)
-  print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
+      return action_preflop, money, bank, last_raise_item_preflop, last_raise
+######################################################################################################Delete
+    def get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer):
+      print(personal["DEALER"], message["ACTION TO PLAYER"], item)
+      print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], 0, action["TO FOLD"], to_call, USD["$"], action["TO CALL"], action["MIN"], last_raise + big_blind, USD["$"], action["TO RAISE"])
+      answer = input()
+      info(answer)
+      answer = int(parsing(answer))
+      if not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
+        while not((answer == 0) or (answer == to_call) or ((answer >= to_call + big_blind) and (answer <= money[item])and answer % big_blind == 0)):
+          print(personal["DEALER"], message["BANK"], bank, USD["$"], message["YOUR NONEY"], money[item], USD["$"], message["YOUR POSITION"], position[item][0], message["YOUR CARDS"], cards[item], item, message["ENTER"], 0, action["TO FOLD"], to_call, USD["$"], action["TO CALL"], action["MIN"], last_raise + big_blind, USD["$"], action["TO RAISE"])
+          answer = input()
+          info(answer)
+          answer = int(parsing(answer))
+      return answer
 
-  def analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise):
-    if answer == 0:
-      action_flop.append([item, message["TO CHECK"]])
-      print(action_flop)
-      print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
-    else:
-      for i in action_flop:
-        if i == ["Flop"]:
-          pass
-        else:
-          if i[0] == item and i[2] == "Raises":
-            last_raise_item_flop = i[3]
-      money[item] = money[item] - answer + last_raise_item_flop
-      bank = bank + answer
-      if money[item] == 0:
-        action_flop.append([item, message["TO BET"], answer])
-        print(action_flop)
-        print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
+    def analis_answer_after_call_raise_preflop(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise):
+      if answer == 0:
+        action_preflop.append([item, position[item][0], message["TO FOLD"]])
+        Players_folds.append(item)
+        print(action_preflop)
+        print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
       else:
-        action_flop.append([item, message["TO BET"], answer])
-        print(action_flop)
-        print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
-      last_raise = answer
-    return action_flop, last_raise_item_flop, money, bank, last_raise
+        if answer == to_call:
+          money[item] = money[item] - to_call
+          bank = bank + to_call
+          action_preflop.append([item, position[item][0], message["TO CALL"], to_call])
+          print(action_preflop)
+          print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        else:
+          if (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_HU["BUTTON, SMALL BLIND"]]) and k == 1:
+            money[item] = money[item] - answer + small_blind
+          if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 1:
+            money[item] = money[item] - answer + big_blind
+          if not(k == 1 and (position[item] == [position_Full_Ring["SMALL BLIND"]] or position[item] == [position_Full_Ring["BIG BLIND"]] or (position[item] == [position_HU["BUTTON, SMALL BLIND"]]))):
+            for i in action_preflop:
+              if i == ["Preflop"]:
+                pass
+              else:
+                if i[0] == item and i[2] == "Raises":
+                  last_raise_item_preflop = i[3]
+            money[item] = money[item] - answer + last_raise_item_preflop
+          bank = bank + answer
+          if money[item] == 0:
+            action_preflop.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_preflop)
+            print(personal["DEALER"], item, position[item][0], message["TO RAISE ALL IN"], answer, USD["$"])
+          else:
+            action_preflop.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_preflop)
+            print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          last_raise = answer
+      return action_preflop, Players_folds, money, last_raise_item_preflop, bank, last_raise
+##############################################################################################
+    while not(ishod == 1):
+      k += 1
+      for item in Players_seat:
+        if len(Players_folds) == len(Players_seat) - 1: break
+        fold = folds_or_no(item, Players_folds)
+        if fold == 0:
+          to_call = last_raise - ( stack - money[item] )
+          for i in action_preflop:
+            if i == ["Preflop"]:
+              pass
+            else:
+              if i[0] == item and i[2] == "Raises":
+                last_raise_item_preflop = i[3]
+          if to_call == 0 and not(k > 1 and last_raise == last_raise_item_preflop):
+            if position[item] == [position_Full_Ring["BIG BLIND"]] and k == 0:
+              pass
+          else:
+            if (k == 0) and ((position[item] == [position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [position_6_max["SMALL BLIND"]]) or (position[item] == [position_6_max["BUTTON"]])):
+              pass
+            if last_raise = last_raise_item_preflop:
+              pass
+            else:
+              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
+              action_preflop, Players_folds, money, last_raise_item_preflop, bank, last_raise = analis_answer_after_call_raise_preflop(answer, k, money, to_call, bank, action_preflop, personal, position, message, item, USD, Players_folds, position_Full_Ring, position_HU, last_raise_item_preflop, last_raise)
+        if who_is_her(Players_seat, Players_folds) == 1: break
+        ishod = 1
+        for item in Players_seat:
+          fold = folds_or_no(item, Players_folds)
+          if fold == 0:
+            if (stack - money[item]) > money_in_game:
+              money_in_game = stack - money[item]
+        for item in Players_seat:
+          fold = folds_or_no(item, Players_folds)
+          if fold == 0:
+            if (stack - money[item]) == money_in_game:
+              pass
+            else:
+              ishod += 1
+   ############################################################################## дальше флоп   
+    print(action_preflop)
+# Блайнды проставлены
+    print("***Dealing Flop***")
+    print(message["POSITION"], position)
+    print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
 
-  def analis_answer_after_call_raise_flop(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
-    if answer  == 0:
-      action_flop.append([item, message["TO FOLD"]])
-      Players_folds.append(item)
-      print(action_flop)
-      print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
-    else:
-      if answer == to_call:
-        money[item] = money[item] - to_call
-        bank = bank + to_call
-        action_flop.append([item, message["TO CALL"], to_call])
+    def analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise):
+      if answer == 0:
+        action_flop.append([item, message["TO CHECK"]])
         print(action_flop)
-        print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
       else:
         for i in action_flop:
           if i == ["Flop"]:
@@ -492,120 +458,120 @@ while not(status == status_go["Stop!"]):
         money[item] = money[item] - answer + last_raise_item_flop
         bank = bank + answer
         if money[item] == 0:
-          action_flop.append([item, position[item][0], message["TO RAISE"], answer])
+          action_flop.append([item, message["TO BET"], answer])
           print(action_flop)
-          print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
         else:
-          action_flop.append([item, position[item][0], message["TO RAISE"], answer])
+          action_flop.append([item, message["TO BET"], answer])
           print(action_flop)
-          print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
         last_raise = answer
-      return action_flop, Players_folds, money, bank, last_raise_item_flop, last_raise
+      return action_flop, last_raise_item_flop, money, bank, last_raise
 
-  flop = []
-  for i in range(3):
-    flop.append(deck_haos[2 * n + 1 + i])
-  print(personal["DEALER"], "Flop", flop)
-  board = flop
-  
-  for item in Players_seat:
-    fold = folds_or_no(item, Players_folds)
-    if fold == 0:
-      money_flop = money[item]
-  action_flop = [["Flop"]] # Список действий префлоп
-  to_call = -1 # Сумма, которую надо заколлировать игроку
-  answer = 0 # Ответ игрока
-  k = -1 # количество кругов торговли
-  ishod = len(Players_seat)
-  last_raise = 0
-  money_in_game = 0
-  last_raise_item_flop = 0
-  
-  if not(who_is_her(Players_seat, Players_folds) == 1) and not(money_in_game == stack):
-    while not(ishod == 1 and k >= 1):
-      k += 1
-      for item in Players_seat:
-        if len(Players_folds) == len(Players_seat) - 1: break
-        fold = folds_or_no(item, Players_folds)
-        if fold == 0:
-          to_call = last_raise - ( money_flop - money[item] )
-          for i in action_preflop:
+    def analis_answer_after_call_raise_flop(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
+      if answer  == 0:
+        action_flop.append([item, message["TO FOLD"]])
+        Players_folds.append(item)
+        print(action_flop)
+        print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
+      else:
+        if answer == to_call:
+          money[item] = money[item] - to_call
+          bank = bank + to_call
+          action_flop.append([item, message["TO CALL"], to_call])
+          print(action_flop)
+          print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        else:
+          for i in action_flop:
             if i == ["Flop"]:
               pass
             else:
               if i[0] == item and i[2] == "Raises":
-                last_raise_item_preflop = i[3]
-          if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
-            if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
-              pass
-            else:
-              answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
-              action_flop, last_raise_item_flop, money, bank, last_raise = analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise)
+                last_raise_item_flop = i[3]
+          money[item] = money[item] - answer + last_raise_item_flop
+          bank = bank + answer
+          if money[item] == 0:
+            action_flop.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_flop)
+            print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
           else:
-            if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
-              pass
-            else:
-              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)             
-              action_flop, Players_folds, money, bank, last_raise_item_flop, last_raise = analis_answer_after_call_raise_flop(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
-        if who_is_her(Players_seat, Players_folds) == 1: break
-        ishod = 1
+            action_flop.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_flop)
+            print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          last_raise = answer
+        return action_flop, Players_folds, money, bank, last_raise_item_flop, last_raise
+
+    flop = []
+    for i in range(3):
+      flop.append(deck_haos[2 * n + 1 + i])
+    print(personal["DEALER"], "Flop", flop)
+    board = flop
+  
+    for item in Players_seat:
+      fold = folds_or_no(item, Players_folds)
+      if fold == 0:
+        money_flop = money[item]
+    action_flop = [["Flop"]] # Список действий префлоп
+    to_call = -1 # Сумма, которую надо заколлировать игроку
+    answer = 0 # Ответ игрока
+    k = -1 # количество кругов торговли
+    ishod = len(Players_seat)
+    last_raise = 0
+    money_in_game = 0
+    last_raise_item_flop = 0
+  
+    if not(who_is_her(Players_seat, Players_folds) == 1) and not(money_in_game == stack):
+      while not(ishod == 1 and k >= 1):
+        k += 1
         for item in Players_seat:
+          if len(Players_folds) == len(Players_seat) - 1: break
           fold = folds_or_no(item, Players_folds)
           if fold == 0:
-            if (money_flop - money[item]) > money_in_game:
-              money_in_game = money_flop - money[item]
-        for item in Players_seat:
-          fold = folds_or_no(item, Players_folds)
-          if fold == 0:
-            if (money_flop - money[item]) == money_in_game:
-              pass
+            to_call = last_raise - ( money_flop - money[item] )
+            for i in action_preflop:
+              if i == ["Flop"]:
+                pass
+              else:
+                if i[0] == item and i[2] == "Raises":
+                  last_raise_item_preflop = i[3]
+            if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
+              if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
+                pass
+              else:
+                answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
+                action_flop, last_raise_item_flop, money, bank, last_raise = analis_answer_after_check_bet_flop(answer, action_flop, message, personal, position, item, last_raise_item_flop, money, bank, USD, last_raise)
             else:
-              ishod += 1
+              if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
+                pass
+              else:
+                answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)             
+                action_flop, Players_folds, money, bank, last_raise_item_flop, last_raise = analis_answer_after_call_raise_flop(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
+          if who_is_her(Players_seat, Players_folds) == 1: break
+          ishod = 1
+          for item in Players_seat:
+            fold = folds_or_no(item, Players_folds)
+            if fold == 0:
+              if (money_flop - money[item]) > money_in_game:
+                money_in_game = money_flop - money[item]
+          for item in Players_seat:
+            fold = folds_or_no(item, Players_folds)
+            if fold == 0:
+              if (money_flop - money[item]) == money_in_game:
+                pass
+              else:
+                ishod += 1
 
 
-  print(action_flop)
-  print("***Dealing Turn***")
-  print(message["POSITION"], position)
-  print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
+    print(action_flop)
+    print("***Dealing Turn***")
+    print(message["POSITION"], position)
+    print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
 
-  def analis_answer_after_check_bet_turn(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise):
-    if answer == 0:
-      action_turn.append([item, message["TO CHECK"]])
-      print(action_turn)
-      print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
-    else:
-      for i in action_turn:
-        if i == ["Turn"]:
-          pass
-        else:
-          if i[0] == item and i[2] == "Raises":
-            last_raise_item_turn = i[3]
-      money[item] = money[item] - answer + last_raise_item_turn
-      bank = bank + answer
-      if money[item] == 0:
-        action_turn.append([item, message["TO BET"], answer])
+    def analis_answer_after_check_bet_turn(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise):
+      if answer == 0:
+        action_turn.append([item, message["TO CHECK"]])
         print(action_turn)
-        print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
-      else:
-        action_turn.append([item, message["TO BET"], answer])
-        print(action_turn)
-        print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
-      last_raise = answer
-    return action_turn, last_raise_item_turn, money, bank, last_raise
-
-  def analis_answer_after_call_raise_turn(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
-    if answer  == 0:
-      action_turn.append([item, message["TO FOLD"]])
-      Players_folds.append(item)
-      print(action_turn)
-      print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
-    else:
-      if answer == to_call:
-        money[item] = money[item] - to_call
-        bank = bank + to_call
-        action_turn.append([item, message["TO CALL"], to_call])
-        print(action_turn)
-        print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
       else:
         for i in action_turn:
           if i == ["Turn"]:
@@ -616,117 +582,117 @@ while not(status == status_go["Stop!"]):
         money[item] = money[item] - answer + last_raise_item_turn
         bank = bank + answer
         if money[item] == 0:
-          action_turn.append([item, position[item][0], message["TO RAISE"], answer])
+          action_turn.append([item, message["TO BET"], answer])
           print(action_turn)
-          print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
         else:
-          action_turn.append([item, position[item][0], message["TO RAISE"], answer])
+          action_turn.append([item, message["TO BET"], answer])
           print(action_turn)
-          print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
         last_raise = answer
-      return action_turn, Players_folds, money, bank, last_raise_item_turn, last_raise
+      return action_turn, last_raise_item_turn, money, bank, last_raise
 
-  turn = deck_haos[2 * n + 5 + 1]
-  board.append(turn)
-  print(personal["DEALER"], "Turn", board)
-
-  for item in Players_seat:
-    fold = folds_or_no(item, Players_folds)
-    if fold == 0:
-      money_turn = money[item]
-  action_turn = [["Turn"]] # Список действий префлоп
-  to_call = -1 # Сумма, которую надо заколлировать игроку
-  answer = 0 # Ответ игрока
-  k = -1 # количество кругов торговли
-  ishod = len(Players_seat)
-  last_raise = 0
-  money_in_game = 0
-  last_raise_item_turn = 0
-  
-  if not(who_is_her(Players_seat, Players_folds) == 1) and not(money_in_game == stack):
-    while not(ishod == 1 and k >= 1):
-      k += 1
-      for item in Players_seat:
-        if len(Players_folds) == len(Players_seat) - 1: break
-        fold = folds_or_no(item, Players_folds)
-        if fold == 0:
-          to_call = last_raise - ( money_turn - money[item] )
-          for i in action_preflop:
-            if i == ["Preflop"]:
+    def analis_answer_after_call_raise_turn(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
+      if answer  == 0:
+        action_turn.append([item, message["TO FOLD"]])
+        Players_folds.append(item)
+        print(action_turn)
+        print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
+      else:
+        if answer == to_call:
+          money[item] = money[item] - to_call
+          bank = bank + to_call
+          action_turn.append([item, message["TO CALL"], to_call])
+          print(action_turn)
+          print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        else:
+          for i in action_turn:
+            if i == ["Turn"]:
               pass
             else:
               if i[0] == item and i[2] == "Raises":
-                last_raise_item_preflop = i[3]
-          if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
-            if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
-              pass
-            else:
-              answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
-              action_turn, last_raise_item_turn, money, bank, last_raise = analis_answer_after_check_bet_turn(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise)
+                last_raise_item_turn = i[3]
+          money[item] = money[item] - answer + last_raise_item_turn
+          bank = bank + answer
+          if money[item] == 0:
+            action_turn.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_turn)
+            print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
           else:
-            if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
-              pass
-            else:
-              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
-              action_turn, Players_folds, money, bank, last_raise_item_turn, last_raise = analis_answer_after_call_raise_turn(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
-        if who_is_her(Players_seat, Players_folds) == 1: break
-        ishod = 1
+            action_turn.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_turn)
+            print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          last_raise = answer
+        return action_turn, Players_folds, money, bank, last_raise_item_turn, last_raise
+
+    turn = deck_haos[2 * n + 5 + 1]
+    board.append(turn)
+    print(personal["DEALER"], "Turn", board)
+
+    for item in Players_seat:
+      fold = folds_or_no(item, Players_folds)
+      if fold == 0:
+        money_turn = money[item]
+    action_turn = [["Turn"]] # Список действий префлоп
+    to_call = -1 # Сумма, которую надо заколлировать игроку
+    answer = 0 # Ответ игрока
+    k = -1 # количество кругов торговли
+    ishod = len(Players_seat)
+    last_raise = 0
+    money_in_game = 0
+    last_raise_item_turn = 0
+  
+    if not(who_is_her(Players_seat, Players_folds) == 1) and not(money_in_game == stack):
+      while not(ishod == 1 and k >= 1):
+        k += 1
         for item in Players_seat:
+          if len(Players_folds) == len(Players_seat) - 1: break
           fold = folds_or_no(item, Players_folds)
           if fold == 0:
-            if (money_turn - money[item]) > money_in_game:
-              money_in_game = money_turn - money[item]
-        for item in Players_seat:
-          fold = folds_or_no(item, Players_folds)
-          if fold == 0:
-            if (money_turn - money[item]) == money_in_game:
-              pass
+            to_call = last_raise - ( money_turn - money[item] )
+            for i in action_preflop:
+              if i == ["Preflop"]:
+                pass
+              else:
+                if i[0] == item and i[2] == "Raises":
+                  last_raise_item_preflop = i[3]
+            if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
+              if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
+                pass
+              else:
+                answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
+                action_turn, last_raise_item_turn, money, bank, last_raise = analis_answer_after_check_bet_turn(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise)
             else:
-              ishod += 1
+              if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
+                pass
+              else:
+                answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
+                action_turn, Players_folds, money, bank, last_raise_item_turn, last_raise = analis_answer_after_call_raise_turn(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
+          if who_is_her(Players_seat, Players_folds) == 1: break
+          ishod = 1
+          for item in Players_seat:
+            fold = folds_or_no(item, Players_folds)
+            if fold == 0:
+              if (money_turn - money[item]) > money_in_game:
+                money_in_game = money_turn - money[item]
+          for item in Players_seat:
+            fold = folds_or_no(item, Players_folds)
+            if fold == 0:
+              if (money_turn - money[item]) == money_in_game:
+                pass
+              else:
+                ishod += 1
 
-  print(action_turn)
-  print("***Dealing River***")
-  print(message["POSITION"], position)
-  print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
+    print(action_turn)
+    print("***Dealing River***")
+    print(message["POSITION"], position)
+    print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
 
-  def analis_answer_after_check_bet_river(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise):
-    if answer == 0:
-      action_river.append([item, message["TO CHECK"]])
-      print(action_river)
-      print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
-    else:
-      for i in action_river:
-        if i == ["River"]:
-          pass
-        else:
-          if i[0] == item and i[2] == "Raises":
-            last_raise_item_river = i[3]
-      money[item] = money[item] - answer + last_raise_item_river
-      bank = bank + answer
-      if money[item] == 0:
-        action_river.append([item, message["TO BET"], answer])
+    def analis_answer_after_check_bet_river(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise):
+      if answer == 0:
+        action_river.append([item, message["TO CHECK"]])
         print(action_river)
-        print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
-      else:
-        action_river.append([item, message["TO BET"], answer])
-        print(action_river)
-        print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
-      last_raise = answer
-    return action_river, last_raise_item_river, money, bank, last_raise
-
-  def analis_answer_after_call_raise_river(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
-    if answer  == 0:
-      action_turn.append([item, message["TO FOLD"]])
-      Players_folds.append(item)
-      print(action_turn)
-      print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
-    else:
-      if answer == to_call:
-        money[item] = money[item] - to_call
-        bank = bank + to_call
-        action_turn.append([item, message["TO CALL"], to_call])
-        print(action_river)
-        print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        print(personal["DEALER"], item, position[item][0], message["TO CHECK"])
       else:
         for i in action_river:
           if i == ["River"]:
@@ -737,99 +703,132 @@ while not(status == status_go["Stop!"]):
         money[item] = money[item] - answer + last_raise_item_river
         bank = bank + answer
         if money[item] == 0:
-          action_river.append([item, position[item][0], message["TO RAISE"], answer])
+          action_river.append([item, message["TO BET"], answer])
           print(action_river)
-          print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET ALL IN"], answer, USD["$"])
         else:
-          action_river.append([item, position[item][0], message["TO RAISE"], answer])
+          action_river.append([item, message["TO BET"], answer])
           print(action_river)
-          print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          print(personal["DEALER"], item, position[item][0], message["TO BET"], answer, USD["$"])
         last_raise = answer
-      return action_river, Players_folds, money, bank, last_raise_item_river, last_raise
+      return action_river, last_raise_item_river, money, bank, last_raise
 
-  river = deck_haos[2 * n + 7 + 1]
-  board.append(river)
-  print(personal["DEALER"], "River", board)
-
-  for item in Players_seat:
-    fold = folds_or_no(item, Players_folds)
-    if fold == 0:
-      money_river = money[item]
-  action_river = [["River"]] # Список действий префлоп
-  to_call = -1 # Сумма, которую надо заколлировать игроку
-  answer = 0 # Ответ игрока
-  k = -1 # количество кругов торговли
-  ishod = len(Players_seat)
-  action_shows = {}
-  last_raise = 0
-  money_in_game = 0
-  last_raise_item_river = 0
-  
-  if not(who_is_her(Players_seat, Players_folds) == 1) and not(money_in_game == stack):
-    while not(ishod == 1 and k >= 1):
-      k += 1
-      for item in Players_seat:
-        if len(Players_folds) == len(Players_seat) - 1: break
-        fold = folds_or_no(item, Players_folds)
-        if fold == 0:
-          to_call = last_raise - ( money_river - money[item] )
-          for i in action_preflop:
-            if i == ["Preflop"]:
+    def analis_answer_after_call_raise_river(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise):
+      if answer  == 0:
+        action_turn.append([item, message["TO FOLD"]])
+        Players_folds.append(item)
+        print(action_turn)
+        print(personal["DEALER"], item, position[item][0], message["TO FOLD"])
+      else:
+        if answer == to_call:
+          money[item] = money[item] - to_call
+          bank = bank + to_call
+          action_turn.append([item, message["TO CALL"], to_call])
+          print(action_river)
+          print(personal["DEALER"], item, position[item][0], message["TO CALL"], to_call, USD["$"])
+        else:
+          for i in action_river:
+            if i == ["River"]:
               pass
             else:
               if i[0] == item and i[2] == "Raises":
-                last_raise_item_preflop = i[3]
-          if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
-            if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
-              pass
-            else:
-              answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
-              action_river, last_raise_item_river, money, bank, last_raise = analis_answer_after_check_bet_river(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise)
+                last_raise_item_river = i[3]
+          money[item] = money[item] - answer + last_raise_item_river
+          bank = bank + answer
+          if money[item] == 0:
+            action_river.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_river)
+            print(personal["DEALER"], item, message["TO RAISE ALL IN"], answer, USD["$"])
           else:
-            if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
-              pass
-            else:
-              answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
-              action_river, Players_folds, money, bank, last_raise_item_river, last_raise = analis_answer_after_call_raise_river(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
-          if who_is_her(Players_seat, Players_folds) == 1: break
-          ishod = 1
-          for item in Players_seat:
-            fold = folds_or_no(item, Players_folds)
-            if fold == 0:
-              if (money_river - money[item]) > money_in_game:
-                money_in_game = money_river - money[item]
-          for item in Players_seat:
-            fold = folds_or_no(item, Players_folds)
-            if fold == 0:
-              if (money_river - money[item]) == money_in_game:
+            action_river.append([item, position[item][0], message["TO RAISE"], answer])
+            print(action_river)
+            print(personal["DEALER"], item, position[item][0], message["TO RAISE"], answer, USD["$"])
+          last_raise = answer
+        return action_river, Players_folds, money, bank, last_raise_item_river, last_raise
+
+    river = deck_haos[2 * n + 7 + 1]
+    board.append(river)
+    print(personal["DEALER"], "River", board)
+
+    for item in Players_seat:
+      fold = folds_or_no(item, Players_folds)
+      if fold == 0:
+        money_river = money[item]
+    action_river = [["River"]] # Список действий префлоп
+    to_call = -1 # Сумма, которую надо заколлировать игроку
+    answer = 0 # Ответ игрока
+    k = -1 # количество кругов торговли
+    ishod = len(Players_seat)
+    action_shows = {}
+    last_raise = 0
+    money_in_game = 0
+    last_raise_item_river = 0
+  
+    if not(who_is_her(Players_seat, Players_folds) == 1) and not(money_in_game == stack):
+      while not(ishod == 1 and k >= 1):
+        k += 1
+        for item in Players_seat:
+          if len(Players_folds) == len(Players_seat) - 1: break
+          fold = folds_or_no(item, Players_folds)
+          if fold == 0:
+            to_call = last_raise - ( money_river - money[item] )
+            for i in action_preflop:
+              if i == ["Preflop"]:
                 pass
               else:
-                ishod += 1
+                if i[0] == item and i[2] == "Raises":
+                  last_raise_item_preflop = i[3]
+            if to_call == 0 and not(k > 1 and last_raise == last_raise_item_reflop):
+              if position[item] == [dictionary_of_position_Full_Ring["BUTTON"]] and k == 0:
+                pass
+              else:
+                answer = get_answer_to_check(personal, message, bank, USD, money, position, cards, item, to_call, action, answer, big_blind)
+                action_river, last_raise_item_river, money, bank, last_raise = analis_answer_after_check_bet_river(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise)
+            else:
+              if (k == 0) and (position[item] == [dictionary_of_position_Full_Ring["BUTTON"]]):
+                pass
+              else:
+                answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
+                action_river, Players_folds, money, bank, last_raise_item_river, last_raise = analis_answer_after_call_raise_river(answer, action_flop, item, message, Players_folds, position, to_call, money, bank, USD, last_raise_item_flop, last_raise)
+            if who_is_her(Players_seat, Players_folds) == 1: break
+            ishod = 1
+            for item in Players_seat:
+              fold = folds_or_no(item, Players_folds)
+              if fold == 0:
+                if (money_river - money[item]) > money_in_game:
+                  money_in_game = money_river - money[item]
+            for item in Players_seat:
+              fold = folds_or_no(item, Players_folds)
+              if fold == 0:
+                if (money_river - money[item]) == money_in_game:
+                  pass
+                else:
+                  ishod += 1
   
-  if who_is_her(Players_seat, Players_folds) > 1:
-    print("***Show Down***")
-    for item in Players_seat:
-      fold = folds_or_no(item, Players_folds)
-      if fold == 0:
-        action_shows[item] = [dictionary_of_action["CARDS SHOWS"]]
-        print(item, dictionary_of_action["CARDS SHOWS"], cards[item])
+    if who_is_her(Players_seat, Players_folds) > 1:
+      print("***Show Down***")
+      for item in Players_seat:
+        fold = folds_or_no(item, Players_folds)
+        if fold == 0:
+          action_shows[item] = [dictionary_of_action["CARDS SHOWS"]]
+          print(item, dictionary_of_action["CARDS SHOWS"], cards[item])
   
-  print(action_river)
-  print(dictionary_of_message["POSITION"], position)
-  print(dictionary_of_personal["DEALER"], money, dictionary_of_message["BANK"], bank, USD["$"])
+    print(action_river)
+    print(dictionary_of_message["POSITION"], position)
+    print(dictionary_of_personal["DEALER"], money, dictionary_of_message["BANK"], bank, USD["$"])
   
-  if not(who_is_her(Players_seat, Players_folds) > 1):
-    for item in Players_seat:
-      fold = folds_or_no(item, Players_folds)
-      if fold == 0:
-        winner = item
-    print("Winner - ",item, "Bank - ", bank)
+    if not(who_is_her(Players_seat, Players_folds) > 1):
+      for item in Players_seat:
+        fold = folds_or_no(item, Players_folds)
+        if fold == 0:
+          winner = item
+      print("Winner - ",item, "Bank - ", bank)
 # Обнуление
-  game += 1
-  Players_seat = Players[0:] + Players[:0]
-  position = detected_position(Players_seat)
-  for item in Players_seat:
-    money[item] = stack
+    game += 1
+    Players_seat = Players[0:] + Players[:0]
+    position = detected_position(Players_seat)
+    for item in Players_seat:
+      money[item] = stack
 # Сброс   
 
-  status = input()
+    status = input()
