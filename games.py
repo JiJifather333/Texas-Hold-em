@@ -417,7 +417,7 @@ def game(status_go, personal, number_game, Players_seat, n, message, position, p
           else:
             if (k == 0) and ((position[item] == [position_HU["BUTTON, SMALL BLIND"]]) or (position[item] == [position_6_max["SMALL BLIND"]]) or (position[item] == [position_6_max["BUTTON"]])):
               pass
-            if last_raise = last_raise_item_preflop:
+            if last_raise == last_raise_item_preflop:
               pass
             else:
               answer = get_answer_to_call_raise(personal, message, item, bank, USD, money, position, cards, action, to_call, last_raise, big_blind, answer)
