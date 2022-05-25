@@ -2,14 +2,6 @@ from datetime import datetime
 import time
 import random
 
-def declare_important_variables():
-# Декларируются важные переменные для игры
-  stack = 100000 # Закуп игроков. Используется в словаре money
-  small_blind = stack // 200 # малый блайнд
-  big_blind = stack // 100 # большой блайнд
-  raik = 0.05 # переменная рейк этого казино
-  return stack, small_blind, big_blind, raik
-
 # Формируем колоду
 def start_deck():
   cards = ["A", "K", "Q","J","T","9","8","7","6","5","4","3","2"]
