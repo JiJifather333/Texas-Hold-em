@@ -236,12 +236,14 @@ def start_game(status_go, Welcome):
 ###################################################################
 
 #Далее пойдет сама функция game!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def game(status, status_go, personal,
-         number_game, Players_seat, n, 
-         message, position, position_HU, 
-         position_6_max, position_Full_Ring, 
-         USD, stack, big_blind, small_blind, 
-         money):
+def game(
+    status, status_go, personal,
+    number_game, Players_seat, n, 
+    message, position, position_HU, 
+    position_6_max, position_Full_Ring, 
+    USD, stack, big_blind, small_blind, 
+    money
+    ):
 
   while not(status == status_go["Stop!"]):
 
@@ -760,7 +762,10 @@ def game(status, status_go, personal,
     print(action_flop)
     print("***Dealing Turn***")
     print(message["POSITION"], position)
-    print(personal["DEALER"], money, message["BANK"], bank, USD["$"])
+    print(
+      personal["DEALER"], money, message["BANK"], 
+      bank, USD["$"]
+      )
 
     def analis_answer_after_check_bet_turn(answer, action_turn, message, personal, position, item, last_raise_item_fturn, money, bank, USD, last_raise):
       if answer == 0:
