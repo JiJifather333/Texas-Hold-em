@@ -1,7 +1,10 @@
 import games
 from games import combination, nohand_combination, position_HU, action, personal, power_cards, position_6_max, Welcome, status_go, USD, position_Full_Ring, message
 
-stack, small_blind, big_blind, raik = games.declare_important_variables()
+stack = 100000 # Закуп игроков. Используется в словаре money
+small_blind = stack // 200 # малый блайнд
+big_blind = stack // 100 # большой блайнд
+raik = 0.05 # переменная рейк этого казино
 
 games.welcome(personal, Welcome)
 
